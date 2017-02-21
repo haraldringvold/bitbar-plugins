@@ -10,10 +10,7 @@
 # <bitbar.image>http://i.imgur.com/YmFrYQH.png</bitbar.image>
 # <bitbar.dependencies>Ruby,VBoxManage</bitbar.dependencies>
 
-
-ENV['PATH'] = ENV['PATH']+':/usr/local/bin'
-
-status = `VBoxManage list runningvms`
+status = `/usr/local/bin/VBoxManage list runningvms`
 
 if status != ""
   vms = status.split(/\n/)
@@ -28,13 +25,15 @@ if status != ""
     name = data_image[1].tr('"','')
     id = data_image[2].tr('{}','')
 
-    puts "#{name}| color=black"
+    puts "#{name}"
     puts "#{id}"
-    puts "Save | color=green bash=VBoxManage  param1=controlvm param2=#{id} param3=savestate"
+    puts "Save | color=green bash=/usr/local/bin/VBoxManage param1=controlvm param2=#{id} param3=savestate terminal=false refresh=true"
     puts "---"
   end
 else
   # if no VMs are running
   puts "🇻"
+  puts "---"
+  puts "No VMs running"
 end
 
